@@ -7,12 +7,12 @@ import Orders from './Router/Orders'
 import Users from './Router/Users'
 function App() {
   return (
-    <div className="App">
+    <div className="App" style = {{width:'100vw',height:'100vh'}}>
       <HashRouter>
         <Route path = '/admin' render = { () => {
           return(
             <Admin >
-              {/* <Redirect path = '/admin/goods'></Redirect> */}
+              <Redirect from = '/' to = '/admin/goods'></Redirect>
               <Route path = '/admin/goods' component = {Goods}></Route>
               <Route path = '/admin/orders' component = {Orders}></Route>
               <Route path = '/admin/users' component = {Users}></Route>
