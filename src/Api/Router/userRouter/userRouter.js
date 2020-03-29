@@ -1,6 +1,6 @@
 const express = require('express')
 const router = express.Router()
-const UserModel = require('../db/module/userModel')
+const UserModel = require('../../db/module/userModel')
 router.post('/login',(req,res) => {
   let {userName,passWord} = req.body
   console.log(req.body);

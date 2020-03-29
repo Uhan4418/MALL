@@ -10,8 +10,10 @@ app.use(bodyParser.urlencoded({extended:true}))
 app.use(bodyParser.json())
 
 // 引入路由
-let UserRouter = require('./Router/userRouter')
+let UserRouter = require('./Router/userRouter/userRouter')
 app.use('/user',UserRouter)
+let GoodsRouter = require('./Router/goodsRouter/goodRouter')
+app.use('/goods',GoodsRouter)
 
 app.listen(3000,()=>{
   console.log('服务器启动')

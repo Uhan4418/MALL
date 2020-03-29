@@ -1,26 +1,28 @@
 import React from 'react';
 import logo from './logo.svg';
-import './App.css';
-
+import Admin from './pages/admin/admin'
+import {HashRouter,Link,Route,Redirect} from 'react-router-dom'
+import Goods from './Router/Goods'
+import Orders from './Router/Orders'
+import Users from './Router/Users'
 function App() {
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <HashRouter>
+        <Route path = '/admin' render = { () => {
+          return(
+            <Admin >
+              {/* <Redirect path = '/admin/goods'></Redirect> */}
+              <Route path = '/admin/goods' component = {Goods}></Route>
+              <Route path = '/admin/orders' component = {Orders}></Route>
+              <Route path = '/admin/users' component = {Users}></Route>
+            </Admin>
+          )
+        }}>
+        </Route>
+      </HashRouter>
     </div>
-  );
+  )
 }
 
 export default App;
