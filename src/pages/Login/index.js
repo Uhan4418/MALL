@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Form, Input, Button, Checkbox } from 'antd';
-import { UserOutlined } from '@ant-design/icons';
+import { UserOutlined,LockOutlined } from '@ant-design/icons';
 import style from './index.module.less';
 class Login extends Component {
   onFinish = async () => {
@@ -9,6 +9,7 @@ class Login extends Component {
   render() {
     return (
       <div className={style['login-box']}>
+        <span className={style.title}>后台管理系统</span>
         <Form
           className={style["login-form"]} >
           {/* 用户名 */}
@@ -34,7 +35,7 @@ class Login extends Component {
               },
             ]}
           >
-            <Input prefix={<UserOutlined className="site-form-item-icon" />} placeholder="password" />
+            <Input prefix={<LockOutlined className="site-form-item-icon" />} placeholder="password" />
           </Form.Item>
           {/* 记住我 */}
           <Form.Item>
@@ -46,8 +47,8 @@ class Login extends Component {
         </a>
           </Form.Item>
           {/* 登录按钮 */}
-          <Form.Item>
-            <Button type="primary" htmlType="submit" className="login-form-button">
+          <Form.Item className={style.item}>
+            <Button type="primary" htmlType="submit" className={style["login-form-button"]}>
               登录
         </Button>
           </Form.Item>
