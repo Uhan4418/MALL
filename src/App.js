@@ -1,14 +1,15 @@
 import React from 'react';
-import logo from './logo.svg';
 import Admin from './pages/admin/admin'
 import {HashRouter,Link,Route,Redirect} from 'react-router-dom'
 import Goods from './Router/Goods'
 import Orders from './Router/Orders'
 import Users from './Router/Users'
+import Login from './pages/Login'
 function App() {
   return (
     <div className="App" style = {{width:'100vw',height:'100vh'}}>
       <HashRouter>
+      <Route path='/login' component={Login}></Route>
         <Route path = '/admin' render = { () => {
           return(
             <Admin >
@@ -24,5 +25,4 @@ function App() {
     </div>
   )
 }
-
 export default App;
