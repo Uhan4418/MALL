@@ -1,5 +1,5 @@
 import React, {Component} from 'react'
-import { Menu, Button } from 'antd';
+import {Menu, Button,} from 'antd';
 import {withRouter} from 'react-router-dom'
 const { SubMenu } = Menu;
 class Nav extends Component {
