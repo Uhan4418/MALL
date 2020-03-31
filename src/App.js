@@ -3,8 +3,8 @@ import Admin from './pages/admin/admin'
 import {HashRouter,Link,Route,Redirect} from 'react-router-dom'
 import Goods from './Router/GoodsList/Goods'
 import AddGoods from './Router/AddGoods/AddGoods'
-import Orders from './Router/Orders'
-import Users from './Router/Users'
+import Orders from './Router/Orders/Orders'
+import Users from './Router/User/Users'
 import Login from './pages/Login'
 function App() {
   return (

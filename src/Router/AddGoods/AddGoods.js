@@ -1,7 +1,7 @@
 import React, {Component} from 'react'
 import { Card,Upload, message, Button,Input  } from 'antd';
 import { UploadOutlined } from '@ant-design/icons';
-import GoodsApi from '../../pages/api/goodsApi'
+import GoodsApi from '../../api/goodsApi'
 const fileList = [
   {
     uid: '-1',

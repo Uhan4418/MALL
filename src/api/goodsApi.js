@@ -1,4 +1,4 @@
-import axios from '../../utils/axios'
+import axios from '../utils/axios'
 class GoodsApi {
   list () {
     let url = '/mall/admin/goods/getGoodsById'
