@@ -5,22 +5,16 @@ import style from './index.module.less';
 import api from '../api/loginApi'
 class Login extends Component {
   onFinish = async (e) => {
-
     let {userName,passWord}=e
     let result=await api.login({userName,passWord})
-    if(result.code==0){
+    if(result.err==0){
       console.log('登录成功');
       this.props.history.replace('/admin')
     }else{
       console.log('登录失败');
-      
     }
-
-    
-    
   }
   render() {
-
     return (
       <div className={style['login-box']}>
         <span className={style.title}>后台管理系统</span>

@@ -1,7 +1,7 @@
 import axios from '../../utils/axios'
 class GoodsApi {
   list () {
-    let url = '/mall/admin/goods/getGoodsById'
+    let url = '/mall/admin/goods/getGoodsList'
     return axios.post(url)
   }
   del (_id) {
@@ -10,6 +10,7 @@ class GoodsApi {
   }
   add(payload) {
     let url = '/mall/admin/goods/addGoods'
+    console.log(payload);
     return axios.post(url,payload)
   }
   update(_id,payload) {

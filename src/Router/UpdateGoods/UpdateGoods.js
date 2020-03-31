@@ -1,7 +1,7 @@
 import React, {Component} from 'react'
 import { Card,Upload, message, Button,Input  } from 'antd';
 import { UploadOutlined } from '@ant-design/icons';
-import GoodsApi from '../../pages/api/goodsApi'
+import UpdateGoodsApi from '../../pages/api/goodsApi'
 const fileList = [
   {
     uid: '-1',
@@ -16,7 +16,7 @@ const props = {
   listType: 'picture',
   defaultFileList: [...fileList],
 }
-class AddGoods extends Component {
+class UpdateGoods extends Component {
   state = {
     "name":"默认名称",
     'type':'零食',
@@ -28,18 +28,18 @@ class AddGoods extends Component {
   submit = async () => {
     if(!fileList[0].url){return message.info('请先上传图片')}
     console.log(this.state);
-    let {err,msg} = await GoodsApi.add(this.state)
-    if(err !== 0){ return message.error(msg)}
-    this.props.history.replace('/admin/goods')
+    // let {err,msg} = await GoodsApi.add(this.state)
+    // if(err !== 0){ return message.error(msg)}
+    // this.props.history.replace('/admin/goods')
   }
   exit = () => {
-    this.props.history.replace('/admin/goods')
+    // this.props.history.replace('/admin/goods')
   }
   render () {
     let {name,type,price,detail,status} = this.state
     return (
       <div style = {{marginTop:'-20px'}}>
-        <Card title='商品添加'>
+        <Card title='商品修改'>
           商品名称 : <Input style = {{width:320,marginTop:'15px'}} value = {name}
           onChange = { (e) => {
             this.setState({name:e.target.value})
@@ -70,10 +70,9 @@ class AddGoods extends Component {
             <p></p>
           <Button type = 'danger' onClick = {this.exit}>取消</Button>&nbsp;&nbsp;&nbsp;
           <Button type = 'primary' onClick = {this.submit}>添加</Button>
-
         </Card>
       </div>
     )
   }
 }
-export default AddGoods
+export default UpdateGoods

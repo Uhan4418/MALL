@@ -49,14 +49,27 @@ class Goods extends Component {
       },
       {
         title: '当前状态',
-        dataIndex: 'putaway',
-        key:'putaway',
+        key:'state',
         width:120,
         height: 40,
-        render(putaway) {
+        render(recode) {
+          let num = recode.status
           let obj = {
             '0':{color:'red',msg:'已下架'},
             '1':{color:'green',msg:'已上架'}
+          }
+          if(num){
+            return (
+              <Tag color = {obj[num].color}>
+                {obj[num].msg}
+              </Tag>
+            )
+          }else{
+            return (
+              <Tag color = 'yellow'>
+                未上架
+              </Tag>
+            )
           }
         }
       },
@@ -81,7 +94,13 @@ class Goods extends Component {
           return (
             <div>
               <Button type = 'ghost' size = 'small' style = {{background:'green',color:'#fff',border:'none'}}>上架</Button><br/>
-              <Button type = 'primary' size = 'small' style = {{border:'none',margin:"5px 0"}}>编辑</Button><br/>
+              <Button type = 'primary' size = 'small' style = {{border:'none',margin:"5px 0"}} 
+                onClick = {(_id) => {
+                  console.log(_id);
+                  this.props.history.push('/admin/updategoods')
+                }}>
+                编辑
+              </Button><br/>
               <Popconfirm
                 title="你确定要删除这个商品吗?"
                 onConfirm={()=>{
@@ -106,10 +125,10 @@ class Goods extends Component {
   }
   delGoods = async (_id) => {
     let result = await GoodsApi.del(_id)
-    console.log(result.err)
     if(result.err !== 0 ) {return false}
     this.getGoodsList()
   }
+
   componentDidMount() {
     this.getGoodsList()
   }
@@ -124,10 +143,10 @@ class Goods extends Component {
             <Option value="全部">全部</Option>
             <Option value="已上架">已上架</Option>
             <Option value="已下架">已下架</Option>
+            <Option value="未上架">未上架</Option>
           </Select>&nbsp;&nbsp;
           <Button type = 'primary' size = 'small'
             onClick = { () => {
-              console.log(this);
               this.props.history.push('/admin/addgoods')
             }}
           >
