@@ -1,7 +1,7 @@
 import React, {Component} from 'react'
 import { Card,Upload, message, Button,Input  } from 'antd';
 import { UploadOutlined } from '@ant-design/icons';
-import UpdateGoodsApi from '../../pages/api/goodsApi'
+import UpdateGoodsApi from '../../api/goodsApi'
 const fileList = [
   {
     uid: '-1',
@@ -27,16 +27,27 @@ class UpdateGoods extends Component {
   }
   submit = async () => {
     if(!fileList[0].url){return message.info('请先上传图片')}
-    console.log(this.state);
-    // let {err,msg} = await GoodsApi.add(this.state)
+    let path = this.props.location.pathname
+    let _id = path.split('/')[3]
+    console.log(_id);
+    
+    let result = await UpdateGoodsApi.findById(_id)
+    console.log(result);
     // if(err !== 0){ return message.error(msg)}
     // this.props.history.replace('/admin/goods')
   }
   exit = () => {
     // this.props.history.replace('/admin/goods')
   }
+  async componentDidMount () {
+    let path = this.props.location.pathname
+    let _id = path.split('/')[3]
+    let result = await UpdateGoodsApi.findById(_id)
+    console.log(result);
+  }
   render () {
     let {name,type,price,detail,status} = this.state
+    console.log(status)
     return (
       <div style = {{marginTop:'-20px'}}>
         <Card title='商品修改'>

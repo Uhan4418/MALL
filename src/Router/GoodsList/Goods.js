@@ -66,8 +66,8 @@ class Goods extends Component {
             )
           }else{
             return (
-              <Tag color = 'yellow'>
-                未上架
+              <Tag color = 'green'>
+                已上架
               </Tag>
             )
           }
@@ -93,11 +93,14 @@ class Goods extends Component {
         render: (recode) => {
           return (
             <div>
-              <Button type = 'ghost' size = 'small' style = {{background:'green',color:'#fff',border:'none'}}>上架</Button><br/>
+              <Button type = 'ghost' size = 'small' style = {{background:'green',color:'#fff',border:'none'}}
+                // onClick = {}
+              >
+                上架
+              </Button><br/>
               <Button type = 'primary' size = 'small' style = {{border:'none',margin:"5px 0"}} 
-                onClick = {(_id) => {
-                  console.log(_id);
-                  this.props.history.push('/admin/updategoods')
+                onClick = {() => {
+                  this.props.history.push('/admin/updategoods/' + recode._id)
                 }}>
                 编辑
               </Button><br/>
@@ -120,7 +123,8 @@ class Goods extends Component {
     ]
   }
   getGoodsList = async () => {
-    let result = await GoodsApi.list()
+    let result = await GoodsApi.findListByPage()
+    // console.log(result);
     this.setState({dataSource:result.list})
   }
   delGoods = async (_id) => {
@@ -143,8 +147,8 @@ class Goods extends Component {
             <Option value="全部">全部</Option>
             <Option value="已上架">已上架</Option>
             <Option value="已下架">已下架</Option>
-            <Option value="未上架">未上架</Option>
           </Select>&nbsp;&nbsp;
+          <Button type = 'primary' size = 'small'>查询</Button>&nbsp;&nbsp;
           <Button type = 'primary' size = 'small'
             onClick = { () => {
               this.props.history.push('/admin/addgoods')
