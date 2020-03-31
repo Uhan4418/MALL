@@ -1,4 +1,4 @@
-import axios from '../../utils/axios'
+import axios from '../utils/axios'
 class Login {
   login(payload){
     let url='/mall/admin/user/login'

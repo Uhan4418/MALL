@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { Form, Input, Button, Checkbox } from 'antd';
 import { UserOutlined,LockOutlined } from '@ant-design/icons';
 import style from './index.module.less';
-import api from '../api/loginApi'
+import api from '../../api/loginApi'
 class Login extends Component {
   onFinish = async (e) => {
     let {userName,passWord}=e

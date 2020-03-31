@@ -1,6 +1,6 @@
 import React, {Component} from 'react'
 import { Table,Card,Tag,Button,Menu,Select,Popconfirm,message} from 'antd'
-import GoodsApi from '../../pages/api/goodsApi'
+import GoodsApi from '../../api/goodsApi'
 import style from './index.module.less'
 const { Option } = Select;
 
