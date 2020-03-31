@@ -2,16 +2,34 @@ import React, { Component } from 'react';
 import { Form, Input, Button, Checkbox } from 'antd';
 import { UserOutlined,LockOutlined } from '@ant-design/icons';
 import style from './index.module.less';
+import api from '../api/loginApi'
 class Login extends Component {
-  onFinish = async () => {
+  onFinish = async (e) => {
 
+    let {userName,passWord}=e
+    let result=await api.login({userName,passWord})
+    if(result.code==0){
+      console.log('登录成功');
+      this.props.history.replace('/admin')
+    }else{
+      console.log('登录失败');
+      
+    }
+
+    
+    
   }
   render() {
+
     return (
       <div className={style['login-box']}>
         <span className={style.title}>后台管理系统</span>
         <Form
-          className={style["login-form"]} >
+          className={style["login-form"]}  
+          initialValues={{
+            remember: true,
+          }}   
+          onFinish={this.onFinish}>
           {/* 用户名 */}
           <Form.Item
             name="userName"
@@ -28,6 +46,7 @@ class Login extends Component {
           </Form.Item>
           {/* 密码 */}
           <Form.Item
+           name="passWord"
             rules={[
               {
                 required: true,
@@ -39,7 +58,7 @@ class Login extends Component {
           </Form.Item>
           {/* 记住我 */}
           <Form.Item>
-            <Form.Item>
+            <Form.Item name="remember" valuePropName="checked" >
               <Checkbox>记住用户名密码</Checkbox>
             </Form.Item>
             <a className="login-form-forgot" href="">
