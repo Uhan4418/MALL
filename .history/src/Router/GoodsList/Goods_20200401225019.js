@@ -1,16 +1,15 @@
 import React, {Component} from 'react'
-import { Table,Card,Tag,Button,Menu,Select,Popconfirm,message,Pagination} from 'antd'
+import { Table,Card,Tag,Button,Menu,Select,Popconfirm,message} from 'antd'
 import GoodsApi from '../../api/goodsApi'
 import style from './index.module.less'
 const { Option } = Select;
 
-
+function handleChange(value) {
+  console.log(`selected ${value}`);
+}
 class Goods extends Component {
   state = {
     dataSource:[],
-    page:1,
-    pageSize:5,
-    count:0,
     columns : [
       {
         title: '商品编号',
@@ -56,8 +55,8 @@ class Goods extends Component {
         render(recode) {
           let num = recode.status
           let obj = {
-            '1':{color:'red',msg:'已下架'},
-            '0':{color:'green',msg:'已上架'}
+            '0':{color:'red',msg:'已下架'},
+            '1':{color:'green',msg:'已上架'}
           }
           if(num){
             return (
@@ -80,8 +79,9 @@ class Goods extends Component {
         width:120,
         height:40,
         render:(recode) => {
+          
           return (
-            <div style = {{width:120,height:80,border:'1px solid #cc'}}>
+            <div style = {{width:120,height:80}}>
               <img src= {recode.img} alt="" style = {{width:'100%',height:'100%'}}/>
             </div>
           )
@@ -94,13 +94,7 @@ class Goods extends Component {
           return (
             <div>
               <Button type = 'ghost' size = 'small' style = {{background:'green',color:'#fff',border:'none'}}
-                onClick = {() => {
-                  if(!recode.status){
-                    recode.status = 1
-                  }
-                  console.log(recode._id,recode.status);
-                  this.changeStatus(recode._id,recode.status)
-                }}
+                // onClick = {}
               >
                 上架
               </Button><br/>
@@ -128,85 +122,33 @@ class Goods extends Component {
     
     ]
   }
-  getGoodsList = async (value) => {
-    let {page,pageSize,count} = this.state
-    switch (value) {
-      case '-1':
-        console.log('q',value);
-        var {list,allCount} = await GoodsApi.findListByPage(page,pageSize)
-        this.setState({dataSource:list,count:allCount})
-        console.log(count,allCount);
-        break;
-      case '0':
-        console.log('s',value);
-        var {list,allCount} = await GoodsApi.findByStatus(value)
-        this.setState({dataSource:list,count:allCount})
-        console.log(count,allCount);
-        break;
-      case '1':
-        console.log('x',value);
-        var {list,allCount} = await GoodsApi.findByStatus(value)
-        this.setState({dataSource:list,count:allCount})
-        console.log(count,allCount);
-        break;
-      default:
-        var {list,allCount} = await GoodsApi.findListByPage(page,pageSize)
-        this.setState({dataSource:list,count:allCount})
-        break;
-    }
+  getGoodsList = async () => {
+    let result = await GoodsApi.findListByPage()
+    // console.log(result);
+    this.setState({dataSource:result.list})
   }
   delGoods = async (_id) => {
     let result = await GoodsApi.del(_id)
     if(result.err !== 0 ) {return false}
     this.getGoodsList()
   }
-  // 修改状态
-  changeStatus  = async (_id,status) => {
-    if(status == '0' || status == undefined){
-      status = '1'
-    }else{
-      status = '0'
-    }
-    let {err,msg} = await GoodsApi.changeStatus(_id,status)
-    if(err !== 0) {return message.error(msg)}
-    this.getGoodsList()
-  }
+
   componentDidMount() {
     this.getGoodsList()
   }
-  handleChange = async (value) => {
-    switch (value) {
-      case '-1':
-        let result1 = await GoodsApi.findListByPage()
-        console.log('全部商品',result1);
-        this.getGoodsList(value)
-        break;
-      case '0':
-        let result2 = await GoodsApi.findByStatus(value)
-        console.log('已上架商品',result2);
-        this.getGoodsList(value)
-        break;
-      case '1':
-        let result3 = await GoodsApi.findByStatus(value)
-        console.log('已上架商品',result3);
-        this.getGoodsList(value)
-        break;
-      default:
-        break;
-    }
-  }
   render () {
-    let {dataSource,columns,count,page,pageSize} = this.state
+    let {dataSource,columns} = this.state
     return (
       <div  className ={style.box}>
         <div  className={style.card}>
           <Tag>商品管理</Tag>
           状态&nbsp;&nbsp;
-          <Select defaultValue="-1" style={{ width: 80 }} onChange={this.handleChange} size = 'small'>
-            <Option value="-1">全部</Option>
-            <Option value="0">已上架</Option>
-            <Option value="1">已下架</Option>
+          <Select defaultValue="全部" style={{ width: 80 }} onChange={handleChange} size = 'small'>
+            <Option value="全部">全部</Option>
+            <Option value="已上架">已上架</Option>
+            <Option value="已下架">已下架</Option>
           </Select>&nbsp;&nbsp;
+          <Button type = 'primary' size = 'small'>查询</Button>&nbsp;&nbsp;
           <Button type = 'primary' size = 'small'
             onClick = { () => {
               this.props.history.push('/admin/addgoods')
@@ -218,19 +160,8 @@ class Goods extends Component {
             <Table
               columns={columns}
               dataSource={dataSource}
-              rowKey='_id'
             />
           </Card>
-          <Pagination defaultCurrent={1} total={50}
-              showQuickJumper = {true}
-              current={page}
-              pageSize={pageSize}
-              onChange = {(page,pageSize) => {
-                this.setState({page},() => {
-                  this.getGoodsList()
-                })
-              }}
-          />
         </div>
 
     </div>

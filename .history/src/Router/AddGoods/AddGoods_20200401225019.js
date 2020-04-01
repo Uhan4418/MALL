@@ -35,7 +35,6 @@ class AddGoods extends Component {
   exit = () => {
     this.props.history.replace('/admin/goods')
   }
-  // upload = async ()
   render () {
     let {name,type,price,detail,status} = this.state
     return (
@@ -47,15 +46,15 @@ class AddGoods extends Component {
           }}/><br/>
           商品类型 : <Input style = {{width:320,marginTop:'15px'}} value = {type}
           onChange = { (e) => {
-            this.setState({type:e.target.value})
+            this.setState({name:e.target.value})
           }}/><br/>
           商品价格 : <Input style = {{width:320,marginTop:'15px'}} value = {price}
           onChange = { (e) => {
-            this.setState({price:e.target.value})
+            this.setState({name:e.target.value})
           }}/><br/>
           商品详情 : <Input style = {{width:320,margin:'15px 0'}} value = {detail}
           onChange = { (e) => {
-            this.setState({detail:e.target.value})
+            this.setState({name:e.target.value})
           }}/><br/>
           发布状态 : 
           <select disabled style = {{marginBottom:'5px'}}>
@@ -67,10 +66,11 @@ class AddGoods extends Component {
             <Button>
               <UploadOutlined />上传图片
             </Button>
-          </Upload>
+            </Upload>
             <p></p>
           <Button type = 'danger' onClick = {this.exit}>取消</Button>&nbsp;&nbsp;&nbsp;
           <Button type = 'primary' onClick = {this.submit}>添加</Button>
+
         </Card>
       </div>
     )
