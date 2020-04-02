@@ -98,7 +98,6 @@ class Goods extends Component {
                   if(!recode.status){
                     recode.status = 1
                   }
-                  console.log(recode._id,recode.status);
                   this.changeStatus(recode._id,recode.status)
                 }}
               >
@@ -132,22 +131,16 @@ class Goods extends Component {
     let {page,pageSize,count} = this.state
     switch (value) {
       case '-1':
-        console.log('q',value);
         var {list,allCount} = await GoodsApi.findListByPage(page,pageSize)
         this.setState({dataSource:list,count:allCount})
-        console.log(count,allCount);
         break;
       case '0':
-        console.log('s',value);
         var {list,allCount} = await GoodsApi.findByStatus(value)
         this.setState({dataSource:list,count:allCount})
-        console.log(count,allCount);
         break;
       case '1':
-        console.log('x',value);
         var {list,allCount} = await GoodsApi.findByStatus(value)
         this.setState({dataSource:list,count:allCount})
-        console.log(count,allCount);
         break;
       default:
         var {list,allCount} = await GoodsApi.findListByPage(page,pageSize)
@@ -178,17 +171,14 @@ class Goods extends Component {
     switch (value) {
       case '-1':
         let result1 = await GoodsApi.findListByPage()
-        console.log('全部商品',result1);
         this.getGoodsList(value)
         break;
       case '0':
         let result2 = await GoodsApi.findByStatus(value)
-        console.log('已上架商品',result2);
         this.getGoodsList(value)
         break;
       case '1':
         let result3 = await GoodsApi.findByStatus(value)
-        console.log('已上架商品',result3);
         this.getGoodsList(value)
         break;
       default:
@@ -221,7 +211,7 @@ class Goods extends Component {
               rowKey='_id'
             />
           </Card>
-          <Pagination defaultCurrent={1} total={50}
+          <Pagination defaultCurrent={1} total={30}
               showQuickJumper = {true}
               current={page}
               pageSize={pageSize}

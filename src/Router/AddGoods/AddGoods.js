@@ -1,21 +1,6 @@
 import React, {Component} from 'react'
-import { Card,Upload, message, Button,Input  } from 'antd';
-import { UploadOutlined } from '@ant-design/icons';
+import { Card, message, Button,Input  } from 'antd';
 import GoodsApi from '../../api/goodsApi'
-const fileList = [
-  {
-    uid: '-1',
-    name: '',
-    status: 'done',
-    url: 'https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png',
-    thumbUrl: 'https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png'
-  }
-]
-const props = {
-  action: 'https://www.mocky.io/v2/5cc8019d300000980a055e76',
-  listType: 'picture',
-  defaultFileList: [...fileList],
-}
 class AddGoods extends Component {
   state = {
     "name":"默认名称",
@@ -23,11 +8,9 @@ class AddGoods extends Component {
     "price":"100",
     'detail':'最爱',
     'status:':'0',
-    'img':fileList[0].url,
+    'img':null,
   }
   submit = async () => {
-    if(!fileList[0].url){return message.info('请先上传图片')}
-    console.log(this.state);
     let {err,msg} = await GoodsApi.add(this.state)
     if(err !== 0){ return message.error(msg)}
     this.props.history.replace('/admin/goods')
@@ -35,9 +18,18 @@ class AddGoods extends Component {
   exit = () => {
     this.props.history.replace('/admin/goods')
   }
-  // upload = async ()
+  upload = async () => {
+    let file = this.refs.imgs.files[0]
+    if(!file) {return message.error('请先上传图片')}
+    let formdata = new FormData()
+    formdata.append('img',file)
+    let {err,msg,path} = await GoodsApi.upload(formdata)
+    if(err !== 0) {return message.error(msg)}
+    this.setState({img:path})
+  }
+
   render () {
-    let {name,type,price,detail,status} = this.state
+    let {name,type,price,detail,status,img} = this.state
     return (
       <div style = {{marginTop:'-20px'}}>
         <Card title='商品添加'>
@@ -63,12 +55,14 @@ class AddGoods extends Component {
               {status === '0' ? '上架' : ''}
             </option>
           </select><br/>
-          <Upload {...props}>
-            <Button>
-              <UploadOutlined />上传图片
-            </Button>
-          </Upload>
-            <p></p>
+          
+          缩略图 : <input type = 'file' ref = 'imgs'/>&nbsp;&nbsp;
+          
+          <img src={img} alt="" width = '120' height = '80'/><br/>
+          
+          <Button type = 'primary' onClick = {this.upload}>上传图片</Button>
+          <p></p>
+          
           <Button type = 'danger' onClick = {this.exit}>取消</Button>&nbsp;&nbsp;&nbsp;
           <Button type = 'primary' onClick = {this.submit}>添加</Button>
         </Card>

@@ -57,5 +57,9 @@ class GoodsApi {
     let url = '/mall/admin/goods/getInfosByStatus'
     return axios.post(url,{status})
   }
+  upload (img) {
+    let url = '/mall/admin/upload/file'
+    return axios.post(url,img)
+  }
 }
 export default new GoodsApi()
