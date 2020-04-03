@@ -1,14 +1,3 @@
-/* import React, {Component} from 'react'
-class Orders extends Component {
-  render () {
-    return (
-      <div>
-        这里是订单信息页
-      </div>
-    )
-  }
-}
-export default Orders */
 import React, { Component } from 'react'
 import orderApi from '../../api/orderApi'
 import style from './index.module.less'
