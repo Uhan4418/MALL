@@ -11,7 +11,6 @@ function App() {
   return (
     <div className="App" style = {{width:'100vw',height:'100vh'}}>
       <HashRouter>
-        <Link to = '/login'>登录</Link>
         <Route path='/login' component={Login}></Route>
         <Route path = '/admin' render = { () => {
           return(
@@ -26,7 +25,7 @@ function App() {
           )
         }}>
         </Route>
-        {/* <Redirect from = '/' to = '/login'></Redirect> */}
+        <Redirect from = '/*' to = '/login'></Redirect>
       </HashRouter>
     </div>
   )

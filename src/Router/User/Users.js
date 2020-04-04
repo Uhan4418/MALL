@@ -65,7 +65,6 @@ class User extends Component {
         <br />
       </div>
       </div>
-        
     )
   }
 }

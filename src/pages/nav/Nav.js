@@ -1,6 +1,7 @@
 import React, {Component} from 'react'
 import {Menu, Button,} from 'antd';
 import {withRouter} from 'react-router-dom'
+import { UserOutlined, ShoppingOutlined, CarryOutFilled } from '@ant-design/icons';
 const { SubMenu } = Menu;
 class Nav extends Component {
   state = {
@@ -9,10 +10,11 @@ class Nav extends Component {
       {key:'1',title:'商品管理',child:'商品信息',path:'/admin/goods'},
       {key:'2',title:'订单管理',child:'订单信息',path:'/admin/orders'},
       {key:'3',title:'用户管理',child:'用户信息',path:'/admin/users'},
-    ]
+    ],
+    icon:[<ShoppingOutlined />,<CarryOutFilled />,<UserOutlined />]
   }
   render () {
-    let {list} = this.state
+    let {list,icon} = this.state
     return (
       <div>
         <div style={{ width: 200 }}>
@@ -32,6 +34,7 @@ class Nav extends Component {
                   key = {'sub'+index}
                   title = {
                     <span>
+                      {icon[index]}
                       <span>{item.title}</span>
                     </span>
                   }
